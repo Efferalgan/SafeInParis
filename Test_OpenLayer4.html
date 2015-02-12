@@ -21,7 +21,7 @@
     <script src="file:///home/efferalgan/Mini_Projet/commissariats.jsonp"></script>
     <script type="text/javascript">
 
-          var lat, lon, geom, feature, features = [], style, i, j, jsonString, jsonObj, lonlat;
+          var lat, lon, geom, feature, features = [], style, i, j, jsonString, jsonObj, lonlat, info, extra;
 
           var atlasManager = new ol.style.AtlasManager({
                 // we increase the initial size so that all symbols fit into
@@ -30,19 +30,19 @@
           });
 
 	      //different collections
-	      var collections = [eclairage, cameras,commissariats];
+	      var collections = [eclairage, cameras, commissariats];
 	      
 		  //colors for the different collections
-		  var pseudostyle = [{color:'rgba(0,0,0,0.6)',radius:20},
-		                     {color:'rgba(134,7,7,0.7)',radius:20},
-		                     {color:'rgba(127,0,127,0.5)',radius:330}]; //330m = distance run in 1mn, assuming speed of 20km/h
-		                                                                //(average human sprint speed)
-
+		  var pseudostyle = [[{color:'rgba(0,0,0,0.6)',radius:20},{color:'rgba(0,0,0,0.6)',radius:60}], //extra styles for in-collection differences
+		                     [{color:'rgba(134,7,7,0.7)',radius:20}],
+		                     [{color:'rgba(127,0,127,0.5)',radius:330}]]; //330m = distance run in 1mn, assuming speed of 20km/h
+		                                                                  //(average human sprint speed)
+		                                                                
 		  //creating a new style
-          function computeFeatureStyle(i) {
+          function computeFeatureStyle(i,extra) {
                 return new ol.style.Style({
                         fill: new ol.style.Fill({
-                            color: pseudostyle[i].color
+                            color: pseudostyle[i][extra].color
                         }),
                         atlasManager: atlasManager
                     });
@@ -58,21 +58,27 @@
 			   for(i=0;i<jsonObj.length;i++)
 			   {
 					lonlat = JSON.stringify(jsonObj[i].geom_x_y).replace("[","").replace("]","").split(",");
+					info = JSON.stringify(jsonObj[i].info)
 					
 					lon = parseFloat(lonlat[0]);
 					lat = parseFloat(lonlat[1]);
 		
+					//window.alert([info,typeof(info),"PPR",typeof("PPR")]);
+					
+					extra = 0;
+					if(j == 0 && info == "\"PPR\""){extra = 1;} //changing style for huge lightings
+		
 					//defining the geometry, converting coordinates
 					geom = new ol.geom.Circle(
 						ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:3857'),
-						pseudostyle[j].radius,
+						pseudostyle[j][extra].radius,
 						'XY'
 					);
 					feature = new ol.Feature({
 						geometry: geom
 					});
 					features.push(feature);
-					style = computeFeatureStyle(j);
+					style = computeFeatureStyle(j,extra);
 					feature.setStyle(style);
 				}
 			}
