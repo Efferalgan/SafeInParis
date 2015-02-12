@@ -16,6 +16,6 @@ subprocess.call(["mongoimport","--db","global","--collection","cameras","--file"
 print("Import des cameras dans mongoDB reussi")
 subprocess.call(["mongoimport","--db","global","--collection","commissariats","--file","commissariats.json"])
 print("Import des cameras dans mongoDB reussi")
-subprocess.call(["mongo","global","--eval","db.eclairage.remove({$and:[{info:{'$ne':\"LEL\"}},{info:{'$ne':\"PPR\"}}]})"])
-print("Destruction des eclairages non-lampadaires reussi")
+#subprocess.call(["mongo","global","--eval","db.eclairage.remove({$and:[{info:{'$ne':\"LEL\"}},{info:{'$ne':\"PPR\"}}]})"])
+#print("Destruction des eclairages non-lampadaires reussi")
 
