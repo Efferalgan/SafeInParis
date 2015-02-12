@@ -1,7 +1,7 @@
 # SafeInParis
 
 ##The goal:
-Visualising data about safety in Paris on a map, in order to be able to avoid the no-go-zones at night. (Or to commit crimes unnoticed.)
+Visualising data about safety in Paris on a map, in order to be able to avoid no-go-zones at night. (Or to commit crimes unnoticed.)
 
 ##The data:
 For now, the map allows to visualise:
