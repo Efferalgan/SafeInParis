@@ -5,7 +5,7 @@ Visualising data about safety in Paris on a map, in order to be able to avoid no
 
 ##The data:
 For now, the map allows to visualise:
-- street lights, a white circle of radius 20m is drawn around regular ones, a 60m around huge lightings, and a 8m around small light;
+- street lights, white circles of radius 20m are drawnn around regular ones, 60m ones around huge lightings, and 8m one around small light;
 - cameras, also 20m, blue color;
 - police stations, a green circle of radius 330m is drawn around them. It roughly corresponds to the distance one can sprint in one minute (assuming running speed of 20km/h).
 
