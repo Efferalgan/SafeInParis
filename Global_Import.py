@@ -1,0 +1,21 @@
+import subprocess
+
+subprocess.call(["python","ConvertEclairageCsvJson.py"])
+print("Conversion eclairage vers json reussie")
+subprocess.call(["python","ConvertCamerasXmlJson.py"])
+print("Conversion cameras vers json reussie")
+subprocess.call(["python","ConvertCommissariatsKmlJson.py"])
+print("Conversion commissariats vers json reussie")
+subprocess.call(["mongo","global","--eval","db.eclairage.drop()"])
+subprocess.call(["mongo","global","--eval","db.cameras.drop()"])
+subprocess.call(["mongo","global","--eval","db.commissariats.drop()"])
+print("Base de donnees nettoyee")
+subprocess.call(["mongoimport","--db","global","--collection","eclairage","--file","eclairage.json"])
+print("Import de l'eclairage dans mongoDB reussi")
+subprocess.call(["mongoimport","--db","global","--collection","cameras","--file","cameras.json"])
+print("Import des cameras dans mongoDB reussi")
+subprocess.call(["mongoimport","--db","global","--collection","commissariats","--file","commissariats.json"])
+print("Import des cameras dans mongoDB reussi")
+#subprocess.call(["mongo","global","--eval","db.eclairage.remove({$and:[{info:{'$ne':\"LEL\"}},{info:{'$ne':\"PPR\"}}]})"])
+#print("Destruction des eclairages non-lampadaires reussi")
+
